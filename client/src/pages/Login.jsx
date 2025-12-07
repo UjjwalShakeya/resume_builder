@@ -7,6 +7,7 @@ import { Lock } from "lucide-react";
 const Login = () => {
 
   const query = new URLSearchParams(window.location.search);
+  
   const urlState = query.get('state');
 
   const [state, setState] = React.useState(urlState ||"login");
