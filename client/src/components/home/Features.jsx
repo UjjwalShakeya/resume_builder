@@ -4,13 +4,16 @@ import Title from "./Title"
 const Features = () => {
   return (
 
+    // added feature section
     <div id="feature" className="flex flex-col items-center my-10 scroll-mt-12">
-
+      
+      {/* added badge right here */}
       <div className="flex items-center gap-2 text-sm text-green-600 bg-blue-400/10  rounded-full px-6 py-1.5">
-        <Zap width={14} />
+        <Zap width={14} /> 
         <span>Simple Process</span>
       </div>
 
+     {/* added title right here */}
       <Title title="Build your resume" description="Our streamlined process
 helps you create a professional resume in minutes with intelligent
 AI-powered tools and features." />
