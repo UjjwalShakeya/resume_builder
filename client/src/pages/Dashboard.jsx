@@ -81,7 +81,7 @@ const Dashboard = () => {
         {/* just a normal horizontal Line */}
         <hr className="border-slate-300 my-6 sm:w-[305px]" />
 
-
+        
         {/* outer container : to get allResumes  */}
 
         <div className="grid grid-cols-2 sm:flex flex-wrap gap-4">
@@ -186,7 +186,6 @@ const Dashboard = () => {
           </form>
         )}
 
-
         {/* if editResume is true then edit resume  */}
         {editResumeId && (
 
@@ -215,7 +214,6 @@ const Dashboard = () => {
 
           </form>
         )}
-
 
       </div>
     </div>
