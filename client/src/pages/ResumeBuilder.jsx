@@ -3,6 +3,7 @@ import { useParams, Link } from 'react-router-dom';
 import { dummyResumeData } from '../assets/assets';
 import { ArrowLeftIcon, Briefcase, ChevronLeft, ChevronRight, FileText, FileTextIcon, FolderIcon, GraduationCap, Sparkles, User } from 'lucide-react';
 import PersonalInfoForm from '../components/PersonalInfoForm';
+import ResumePreview from '../components/ResumePreview';
 
 const ResumeBuilder = () => {
 
@@ -95,7 +96,7 @@ const ResumeBuilder = () => {
                       Previous
                     </button>
                   )}
-                  
+
                   <button onClick={() => setActiveSectionIndex((prevIndex) => Math.min(prevIndex + 1, sections.length - 1))}
                     className={`flex items-center gap-1 p-3 rounded-lg text-sm font-medium text-gray-600 hover:bg-gray-50 transition-all ${activeSectionIndex === sections.length - 1 && 'opacity-50'}`} disabled={activeSectionIndex == sections.length - 1}>
                     Next
@@ -121,7 +122,14 @@ const ResumeBuilder = () => {
 
 
           {/* Right Panel - Preview */}
-          <div></div>
+          <div className='lg:col-span-7 max-lg:mt-6'>
+            <div>
+              {/* Buttons */}
+            </div>
+
+            {/* resume preview */}
+            <ResumePreview data={resumeData} template={resumeData.template} accentColor={resumeData.accent_color} />
+          </div>
 
 
         </div>

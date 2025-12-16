@@ -58,7 +58,6 @@ const PersonalInfoForm = ({ data, onChange, removeBackground, setRemoveBackgroun
             {/* mapped over the fields array to get the value of fields */}
             {fields.map((field) => {
                 const Icon = field.icons;
-                console.log(data);
 
                 return (
                     <div key={field.key} className='space-y-1 mt-5'>
