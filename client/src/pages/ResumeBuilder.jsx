@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useParams, Link } from 'react-router-dom';
 import { dummyResumeData } from '../assets/assets';
 import { ArrowLeftIcon, Briefcase, ChevronLeft, ChevronRight, FileText, FileTextIcon, FolderIcon, GraduationCap, Sparkles, User } from 'lucide-react';
+import PersonalInfoForm from '../components/PersonalInfoForm';
 
 const ResumeBuilder = () => {
 
@@ -29,10 +30,11 @@ const ResumeBuilder = () => {
     }
   }
 
-  // creating states for background removal and tracking active secion
+  // creating states for background removal and tracking active section
   const [activeSectionIndex, setActiveSectionIndex] = useState(0);
   const [removeBackground, setRemoveBackground] = useState(false);
 
+  // all sections of resume builder 
   const sections = [
     { id: "personal", name: "personal info", icon: User },
     { id: "summary", name: "Summary", icon: FileText },
@@ -93,6 +95,7 @@ const ResumeBuilder = () => {
                       Previous
                     </button>
                   )}
+                  
                   <button onClick={() => setActiveSectionIndex((prevIndex) => Math.min(prevIndex + 1, sections.length - 1))}
                     className={`flex items-center gap-1 p-3 rounded-lg text-sm font-medium text-gray-600 hover:bg-gray-50 transition-all ${activeSectionIndex === sections.length - 1 && 'opacity-50'}`} disabled={activeSectionIndex == sections.length - 1}>
                     Next
@@ -107,6 +110,7 @@ const ResumeBuilder = () => {
               <div className='space-y-6'>
                 {activeSection.id === "personal" && (
                   <div>
+                    <PersonalInfoForm data={resumeData.personal_info} onChange={(data) => setResumeData(prev => ({ ...prev, personal_info: data }))} removeBackground={removeBackground} setRemoveBackground={setRemoveBackground} />
                   </div>
                 )}
               </div>

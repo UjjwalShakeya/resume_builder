@@ -81,14 +81,13 @@ const Dashboard = () => {
         {/* just a normal horizontal Line */}
         <hr className="border-slate-300 my-6 sm:w-[305px]" />
 
-        
+
         {/* outer container : to get allResumes  */}
 
         <div className="grid grid-cols-2 sm:flex flex-wrap gap-4">
           {allResumes.map((resume, index) => {
             const baseColor = colors[index % colors.length];
             return (
-
               <button
                 key={index} onClick={() => navigate(`/app/builder/${resume._id}`)}
                 className="relative w-full sm:max-w-36 h-48 flex flex-col items-center justify-center rounded-lg gap-2 border group hover:shadow-1g transition-all duration-300 cursor-pointer"
