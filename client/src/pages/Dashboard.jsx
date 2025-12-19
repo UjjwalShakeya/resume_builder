@@ -50,6 +50,7 @@ const Dashboard = () => {
   useEffect(() => {
     loadAllResumes();
   }, [])
+  
 
   return (
     <div>
