@@ -8,6 +8,7 @@ import TemplateSelector from '../components/TemplateSelector';
 import ColorPicker from '../components/ColorPicker';
 import ProfessionalSummaryForm from '../components/ProfessionalSummaryForm';
 import ExperienceForm from '../components/ExperienceForm';
+import EducationForm from '../components/EducationForm';
 
 const ResumeBuilder = () => {
 
@@ -120,7 +121,7 @@ const ResumeBuilder = () => {
                 {/* if activeSection.id change to personal show personal component*/}
                 {activeSection.id === "personal" && (
                   <div>
-                    <PersonalInfoForm data={resumeData.personal_info} onChange={(data) => setResumeData(prev => ({ ...prev, personal_info: data }))} removeBackground={removeBackground} setRemoveBackground={setRemoveBackground}  />
+                    <PersonalInfoForm data={resumeData.personal_info} onChange={(data) => setResumeData(prev => ({ ...prev, personal_info: data }))} removeBackground={removeBackground} setRemoveBackground={setRemoveBackground} />
                   </div>
                 )}
 
@@ -139,6 +140,19 @@ const ResumeBuilder = () => {
                       setResumeData((prev) => ({
                         ...prev,
                         experience: data,
+                      }))
+                    }
+                  />
+                )}
+
+                {/* education section */}
+                {activeSection.id == "education" && (
+                  <EducationForm
+                    data={resumeData.education}
+                    onChange={(data) =>
+                      setResumeData((prev) => ({
+                        ...prev,
+                        education: data,
                       }))
                     }
                   />
