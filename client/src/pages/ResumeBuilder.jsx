@@ -9,6 +9,7 @@ import ColorPicker from '../components/ColorPicker';
 import ProfessionalSummaryForm from '../components/ProfessionalSummaryForm';
 import ExperienceForm from '../components/ExperienceForm';
 import EducationForm from '../components/EducationForm';
+import ProjectForm from '../components/ProjectForm';
 
 const ResumeBuilder = () => {
 
@@ -46,7 +47,7 @@ const ResumeBuilder = () => {
     { id: "summary", name: "Summary", icon: FileText },
     { id: "experience", name: "Experience", icon: Briefcase },
     { id: "education", name: "Education", icon: GraduationCap },
-    { id: "project", name: "Projects", icon: FolderIcon },
+    { id: "projects", name: "Projects", icon: FolderIcon },
     { id: "skills", name: "Skills", icon: Sparkles },
   ]
 
@@ -133,7 +134,7 @@ const ResumeBuilder = () => {
                 )}
 
                 {/* experience section */}
-                {activeSection.id == "experience" && (
+                {activeSection.id === "experience" && (
                   <ExperienceForm
                     data={resumeData.experience}
                     onChange={(data) =>
@@ -146,13 +147,24 @@ const ResumeBuilder = () => {
                 )}
 
                 {/* education section */}
-                {activeSection.id == "education" && (
+                {activeSection.id === "education" && (
                   <EducationForm
                     data={resumeData.education}
                     onChange={(data) =>
                       setResumeData((prev) => ({
                         ...prev,
                         education: data,
+                      }))
+                    }
+                  />
+                )}
+            {console.log(activeSection.id) }
+                {/* project section */}
+                {activeSection.id === "projects" && (
+                  <ProjectForm data={resumeData.project} onChange={(data) =>
+                      setResumeData((prev) => ({
+                        ...prev,
+                        project: data,
                       }))
                     }
                   />
