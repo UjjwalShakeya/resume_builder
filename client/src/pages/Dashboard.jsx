@@ -5,62 +5,84 @@ import { dummyResumeData } from "../assets/assets.js";
 
 const Dashboard = () => {
 
+  // default accent colors for resumes
   const colors = ["#9333ea", "#d97706", "#dc2626", "#0284c7", "#16a34a"];
 
   // creating all necessary states
+
+  // it will create a new state to hold all resumes
   const [allResumes, setAllResumes] = useState([]);
+
+  // showing modal for creating new resume
   const [showCreateResume, setShowCreateResume] = useState(false);
+
+  // showing modal for uploading existing resume
   const [showUploadResume, setShowUploadResume] = useState(false);
+
+  // state for setting title of resume
   const [title, setTitle] = useState('');
+
+  // it will hold the uploaded resume file
   const [resume, setResume] = useState(null);
+
+  // state for editing resume
   const [editResumeId, setEditResumeId] = useState(null);
 
-
+  // using navigate hook to navigate to builder page
   const navigate = useNavigate();
 
+
+  //fetch all resumes from dummy data
   const loadAllResumes = async () => {
-    //fetch all resumes from backend
     setAllResumes(dummyResumeData)
   }
 
+  // handle create resume and upload resume
   const createResume = async (e) => {
     e.preventDefault();
     setShowCreateResume(false);
     navigate(`/app/builder/res123`)
-
   }
+
   const uploadResume = async (e) => {
     e.preventDefault();
     setShowUploadResume(false);
     navigate(`/app/builder/res123`)
   };
 
+  // handler for editing resume title
   const editTitle = async (e) => {
     e.preventDefault();
   }
 
+  // handler for deleting resume
   const deleteResume = async (resumeId) => {
     const confirm = window.confirm('Are you sure you want to delete this resume?')
     if (confirm) {
       setAllResumes(prev => prev.filter(resume => resume._id != resumeId))
-
     }
   }
 
+  // loading all resumes on component mount
   useEffect(() => {
     loadAllResumes();
   }, [])
-  
+
 
   return (
+    // outermost container
     <div>
+
+      {/* Main page container */}
       <div className="max-w-7xl mx-auto px-4 py-8">
+
         <p className="text-2xl font-medium mb-6 bg-gradient-to-r from-slate-600 to-slate-700 bg-clip-text text-transparent sm:hidden">
           Welcome,Joe Doe
         </p>
 
-        {/* wrapper for buttons :  create resume - upload existing resume  */}
+        {/* wrapper for buttons :  create resume and upload existing resume  */}
         <div className="flex gap-4">
+
           <button onClick={() => setShowCreateResume(true)} className="w-full bg-white sm:max-w-36 h-48 flex flex-col items-center justify-center rounded-lg gap-2 text-slate-600 border border-dashed border-slate-300 group hover:border-indigo-500 hover:shadow-lg transition-all duration-300 group hover:border-indigo-500 hover:shadow-lg transition-all duration-300 cursor-pointer">
             <PlusIcon className="size-11 transition-all duration-300 p-2.5 bg-gradient-to-br from-indigo-300 to-indigo-500 text-white rounded-full" />
             <p
@@ -69,6 +91,7 @@ const Dashboard = () => {
               Create Resume
             </p>
           </button>
+
           <button onClick={() => setShowUploadResume(true)} className="w-full bg-white sm:max-w-36 h-48 flex flex-col items-center justify-center rounded-lg gap-2 text-slate-600 border border-dashed border-slate-300 group hover:border-purple-500 hover:shadow-lg transition-all duration-300 group hover:border-purple-500 hover:shadow-lg transition-all duration-300 cursor-pointer">
             <UploadCloudIcon className="size-11 transition-all duration-300 p-2.5 bg-gradient-to-br from-purple-300 to-purple-500 text-white rounded-full" />
             <p
@@ -87,7 +110,9 @@ const Dashboard = () => {
 
         <div className="grid grid-cols-2 sm:flex flex-wrap gap-4">
           {allResumes.map((resume, index) => {
+
             const baseColor = colors[index % colors.length];
+
             return (
               <button
                 key={index} onClick={() => navigate(`/app/builder/${resume._id}`)}
@@ -103,7 +128,9 @@ const Dashboard = () => {
                 <p className="absolute bottom-1 text-[11px] text-slate-400 group-hover:text-slate-500 transition-all duration-300 px-2 text-center" style={{ color: baseColor + '90' }}>Updated On {new Date(resume.updatedAt).toLocaleDateString()}</p>
 
                 <div onClick={e => e.stopPropagation()} className="absolute top-1 right-1 group-hover:flex items-center hidden">
+                  {/* deleting resume by the resume id */}
                   <TrashIcon onClick={() => deleteResume(resume._id)} className="size-7 p-1.5 hover:bg-white/50 rounded text-slate-700 transition-colors" />
+                  {/* editing resume name by the resume id */}
                   <PencilIcon onClick={() => { setEditResumeId(resume._id); setTitle(resume.title) }}
                     className="size-7 p-1.5 hover:bg-white/50 rounded text-slate-700 transition-colors" />
                 </div>
@@ -111,6 +138,7 @@ const Dashboard = () => {
               </button>
             )
           })}
+
         </div>
 
         {/* if showCreateResume is true open popup box to take input */}
@@ -118,8 +146,11 @@ const Dashboard = () => {
           <form onSubmit={createResume} onClick={() => setShowCreateResume(false)} className='fixed inset-0 bg-black/70 backdrop-blur bg-opacity-50 z-10 flex items-center justify-center'
           >
             <div onClick={(e) => e.stopPropagation()} className='relative bg-slate-50 border shadow-md rounded-lg w-full max-w-sm p-6'>
+
               <h2 className="text-xl font-bold mb-4">Create a Resume</h2>
-              <input type="text"
+
+              <input onChange={(e) => setTitle(e.target.value)}
+                value={title} type="text"
                 placeholder="Enter resume title"
                 className="w-full px-4 py-2 mb-4 focus:border-green-600 ring-green-600"
                 required />
@@ -139,6 +170,8 @@ const Dashboard = () => {
 
           </form>
         )}
+
+        {/* if showUploadResume is true open popup box to take input of existing resume*/}
 
         {showUploadResume && (
           <form onSubmit={uploadResume} onClick={() => setShowUploadResume(false)} className='fixed inset-0 bg-black/70 backdrop-blur bg-opacity-50 z-10 flex items-center justify-center'
@@ -174,6 +207,7 @@ const Dashboard = () => {
                 Upload Resume
               </button>
 
+              {/* closing the upload resume popup */}
               <XIcon
                 className='absolute top-4 right-4 text-slate-400 hover:text-slate-600 cursor-pointer transition-colors'
                 onClick={() => {

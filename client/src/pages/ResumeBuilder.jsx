@@ -60,8 +60,10 @@ const ResumeBuilder = () => {
 
 
   return (
+    // main div
     <div>
-      {/* Back to dashboard */}
+
+      {/*  Back to dashboard Link */}
       <div className='max-w-7xl mx-auto px-4 py-6'>
         <Link to={'/app'} className='inline-flex gap-2 items-center text-slate-700 transition-all'>
           <ArrowLeftIcon className='size-4' /> Back to Dashboard
@@ -77,9 +79,9 @@ const ResumeBuilder = () => {
             <div className='bg-white rounded-lg shadow-sm border border-gray-200 p-6 pt-1'>
 
 
-              {/* progress bar using activeSection Index */}
               <hr className='absolute top-0 left-0 right-0 border-2 border-gray-200' />
 
+              {/* progress bar using activeSection Index */}
               <hr
                 className="absolute top-0 left-0 h-1 bg-gradient-to-r from-green-500 to-green-600 border-none transition-all duration-2000"
                 style={{ width: `${(activeSectionIndex * 100) / (sections.length - 1)}%` }}
@@ -98,7 +100,7 @@ const ResumeBuilder = () => {
                 <div className='flex items-center'>
                   {activeSectionIndex !== 0 && (
                     <button onClick={() => setActiveSectionIndex((prevIndex) => Math.max(prevIndex - 1, 0))}
-                      className="flex items-center gap-1 p-3 rounded-lg text-sm font-medium text-gray-600 hover:bg-gray-50 transition-all" disabled={activeSectionIndex == 0}>
+                      className="flex items-center gap-1 p-3 rounded-lg text-sm font-medium text-gray-600 hover:bg-gray-50 transition-all" disabled={activeSectionIndex === 0}>
                       <ChevronLeft className="size-4" />
                       Previous
                     </button>
@@ -109,7 +111,6 @@ const ResumeBuilder = () => {
                     Next
                     <ChevronRight className="size-4" />
                   </button>
-
                 </div>
 
               </div>
@@ -119,16 +120,17 @@ const ResumeBuilder = () => {
                 {/* if activeSection.id change to personal show personal component*/}
                 {activeSection.id === "personal" && (
                   <div>
-                    <PersonalInfoForm data={resumeData.personal_info} onChange={(data) => setResumeData(prev => ({ ...prev, personal_info: data }))} removeBackground={removeBackground} setRemoveBackground={setRemoveBackground} />
+                    <PersonalInfoForm data={resumeData.personal_info} onChange={(data) => setResumeData(prev => ({ ...prev, personal_info: data }))} removeBackground={removeBackground} setRemoveBackground={setRemoveBackground}  />
                   </div>
                 )}
 
                 {/* if activeSection.id change to summary show summary component*/}
                 {activeSection.id === "summary" && (
                   <div>
-                    <ProfessionalSummaryForm data={resumeData.professional_summary} onChange={(data) => setResumeData(prev => ({ ...prev, professional_summary: data }))} />
+                    <ProfessionalSummaryForm data={resumeData.professional_summary} onChange={(data) => setResumeData(prev => ({ ...prev, professional_summary: data }))} setResumeData={setResumeData} />
                   </div>
                 )}
+
                 {/* experience section */}
                 {activeSection.id == "experience" && (
                   <ExperienceForm

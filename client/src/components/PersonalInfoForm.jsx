@@ -22,7 +22,9 @@ const PersonalInfoForm = ({ data, onChange, removeBackground, setRemoveBackgroun
 
 
     return (
+        // outernmost div
         <div>
+            {/* heading and subheading */}
             <h3 className='text-lg font-semibold text-gray-900'>Personal Information</h3>
             <p className='text-sm text-gray-600'>Get Started with the personal information</p>
 
