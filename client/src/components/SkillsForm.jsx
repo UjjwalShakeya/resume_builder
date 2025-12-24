@@ -65,6 +65,7 @@ const SkillsForm = ({ data, onChange }) => {
                     <p className='text-sm'>Add your technical and soft skills above.</p>
                 </div>
             )}
+            
             <div className='bg-blue-50 p-3 rounded-lg'>
 
                 <p className='text-sm text-blue-800'><strong>Tip:</strong> Add 8-12
