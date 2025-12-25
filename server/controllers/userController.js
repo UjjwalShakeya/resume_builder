@@ -6,7 +6,7 @@ import jwt from "jsonwebtoken"
 const generateToken = (userId) => {
     const token = jwt.sign({ userId }, process.env.JWT_SECRET, { expiresIn: "7d" });
     return token;
-}
+};
 
 // controller for user registration
 // POST: /api/users/register
@@ -15,7 +15,6 @@ export const registerUser = async (req, res) => {
 
         // desctructing name email password 
         const { name, email, password } = req.body;
-
 
         // check if any of field is missing
         if (!name, !email, !password) {
@@ -61,7 +60,6 @@ export const loginUser = async (req, res) => {
         }
 
         // check if password is correct
-        const isMatch = await bcrypt.compare(password, user.password);
         if (!user.comparePassword) {
             return res.status(400).json({ message: "Invalid email or password" });
         }
