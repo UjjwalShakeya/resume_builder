@@ -10,9 +10,6 @@ const app = express();
 // creating PORT variable
 const PORT = process.env.PORT || 3000;
 
-// connecting to database
-await connectDB();
-
 // using express json middleware
 app.use(express.json());
 
@@ -22,7 +19,10 @@ app.use(cors());
 app.get('/', (req, res) => res.send('Server is live...'))
 
 // app listening on 
-app.listen(PORT, () => {
+app.listen(PORT, async () => {
+    // database connection
+    await connectDB();
+    
     console.log(`Server is running on port ${PORT}`);
 })
 
