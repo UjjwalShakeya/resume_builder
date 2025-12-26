@@ -11,6 +11,7 @@ const generateToken = (userId) => {
 
 // controller for user registration
 // POST: /api/users/register
+
 export const registerUser = async (req, res) => {
     try {
 
