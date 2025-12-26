@@ -2,6 +2,7 @@
 import User from "../models/User.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import Resume from "../models/Resume.js";
 
 const generateToken = (userId) => {
     const token = jwt.sign({ userId }, process.env.JWT_SECRET, { expiresIn: "7d" });
@@ -67,7 +68,7 @@ export const loginUser = async (req, res) => {
         // return success message
         const token = generateToken(user._id);
         user.password = undefined;
-        
+
         return res.status(200).json({ message: "Login successfully", token, user: user });
 
 
@@ -77,7 +78,7 @@ export const loginUser = async (req, res) => {
 };
 
 // controller for getting user by id
-// POST: /api/users/data
+// Get: /api/users/data
 export const getUserById = async (req, res) => {
     try {
         // getting user id from request
@@ -92,6 +93,22 @@ export const getUserById = async (req, res) => {
         // return user data 
         user.password = undefined;
         res.status(200).json({ user });
+
+    } catch (error) {
+        return res.status(400).json({ message: error.message });
+    }
+};
+
+// controller for getting user resume
+// Get: /api/users/resumes
+export const getUserResumes = async (req, res) => {
+    try {
+        // getting user id from request
+        const userId = req.userId;
+
+        // check if the user already exist
+        const resumes = await Resume.find({ userId });
+        res.status(200).json({ resumes });
 
     } catch (error) {
         return res.status(400).json({ message: error.message });

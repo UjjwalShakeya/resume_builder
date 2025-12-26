@@ -1,7 +1,7 @@
 // importing required modules
 
 import express from "express";
-import { getUserById, loginUser, registerUser } from "../controllers/userController";
+import { getUserById, getUserResumes, loginUser, registerUser } from "../controllers/userController";
 // importing authentication middleware
 import protect from "../middlewares/authMiddleware";
 
@@ -13,6 +13,7 @@ const userRouter = express.Router();
 userRouter.post("/register", registerUser);
 userRouter.post("/login", loginUser);
 userRouter.get("/data", protect, getUserById);
+userRouter.get("/resumes", protect, getUserResumes);
 
 // exporting the default user router
 export default userRouter;
