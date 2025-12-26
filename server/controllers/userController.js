@@ -23,7 +23,7 @@ export const registerUser = async (req, res) => {
         }
 
         // check if the user already exist
-        const user = await User.findone({ email });
+        const user = await User.findOne({ email });
         if (user) {
             return res.status(400).json({ message: "User already exists" });
         }
@@ -40,8 +40,62 @@ export const registerUser = async (req, res) => {
 
         return res.status(201).json({ message: "User created successfully", token, user: newUser });
 
-    
+
     } catch (error) {
         return res.status(400).json({ message: error.message });
     }
 }
+
+// controller for user login
+// POST: /api/users/login
+export const loginUser = async (req, res) => {
+    try {
+
+        // desctructing name email password 
+        const { email, password } = req.body;
+
+        // check if the user already exist
+        const user = await User.findOne({ email });
+        if (!user) {
+            return res.status(400).json({ message: "Invalid email or password" });
+        }
+
+        // check if password is correct
+        const isMatch = await bcrypt.compare(password, user.password);
+        if (!user.comparePassword) {
+            return res.status(400).json({ message: "Invalid email or password" });
+        }
+
+        // return success message
+        const token = generateToken(user._id);
+        user.password = undefined;
+
+        return res.status(200).json({ message: "Login successfully", token, user: user });
+
+
+    } catch (error) {
+        return res.status(400).json({ message: error.message });
+    }
+};
+
+// controller for getting user by id
+// POST: /api/users/data
+export const getUserById = async (req, res) => {
+    try {
+        // getting user id from request
+        const userId = req.userId;
+
+        // check if the user already exist
+        const user = await User.findById(userId);
+        if (!user) {
+            return res.status(404).json({ message: "User not found" });
+        };
+
+        // return user data 
+        user.password = undefined;
+        res.status(200).json({ user });
+
+    } catch (error) {
+        return res.status(400).json({ message: error.message });
+    }
+};
