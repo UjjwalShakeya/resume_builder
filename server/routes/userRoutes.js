@@ -12,7 +12,7 @@ const userRouter = express.Router();
 // creating endpoints which connects to controller functions
 userRouter.post("/register", registerUser);
 userRouter.post("/login", loginUser);
-userRouter.post("/data", protect, getUserById);
+userRouter.get("/data", protect, getUserById);
 
 // exporting the default user router
 export default userRouter;

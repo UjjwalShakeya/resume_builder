@@ -1,7 +1,7 @@
 // importing imporant modules
-import User from "../models/User.js"
-import bcrypt from "bcrypt"
-import jwt from "jsonwebtoken"
+import User from "../models/User.js";
+import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
 
 const generateToken = (userId) => {
     const token = jwt.sign({ userId }, process.env.JWT_SECRET, { expiresIn: "7d" });
@@ -67,7 +67,7 @@ export const loginUser = async (req, res) => {
         // return success message
         const token = generateToken(user._id);
         user.password = undefined;
-
+        
         return res.status(200).json({ message: "Login successfully", token, user: user });
 
 
