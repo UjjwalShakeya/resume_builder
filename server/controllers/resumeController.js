@@ -1,8 +1,8 @@
 
 // importing required modules
 
-import imageKit from "../configs/imageKit";
-import Resume from "../models/Resume";
+import imageKit from "../configs/imageKit.js";
+import Resume from "../models/Resume.js";
 import fs from "fs";
 
 // controller for creating a new Resume
