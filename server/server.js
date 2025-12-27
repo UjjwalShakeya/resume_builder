@@ -4,6 +4,7 @@ import cors from "cors";
 import 'dotenv/config'; // This loads the .env file automatically
 import connectDB from "./configs/db.js";
 import userRouter from "./routes/userRoutes.js";
+import resumeRouter from "./routes/resumeRoutes.js";
 
 // creating express app
 const app = express();
@@ -18,13 +19,17 @@ app.use(express.json());
 app.use(cors());
 
 app.get('/', (req, res) => res.send('Server is live...'))
-app.use('/api/users', userRouter)
+
+// create user routes
+app.use('/api/users', userRouter);
+// create resume routes
+app.use('/api/resumes', resumeRouter);
 
 // app listening on 
 app.listen(PORT, async () => {
     // database connection
     await connectDB();
-    
+
     console.log(`Server is running on port ${PORT}`);
 })
 

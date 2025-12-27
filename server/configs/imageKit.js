@@ -12,5 +12,4 @@ const response = await client.files.upload({
 });
 
 
-
 export default imageKit;

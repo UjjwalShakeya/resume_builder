@@ -10,9 +10,16 @@ import protect from "../middlewares/authMiddleware.js";
 const userRouter = express.Router();
 
 // creating endpoints which connects to controller functions
+
+// endpoint for user registration
 userRouter.post("/register", registerUser);
+// endpoint for user login
 userRouter.post("/login", loginUser);
+// endpoint to get user data, protected by authentication middleware
+
 userRouter.get("/data", protect, getUserById);
+
+// endpoint to get user resumes, protected by authentication middleware
 userRouter.get("/resumes", protect, getUserResumes);
 
 // exporting the default user router
