@@ -1,9 +1,9 @@
 // importing required modules
 
 import express from "express";
-import { getUserById, getUserResumes, loginUser, registerUser } from "../controllers/userController";
+import { getUserById, getUserResumes, loginUser, registerUser } from "../controllers/userController.js";
 // importing authentication middleware
-import protect from "../middlewares/authMiddleware";
+import protect from "../middlewares/authMiddleware.js";
 
 
 // creating router instance
