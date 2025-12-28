@@ -1,4 +1,5 @@
 
+
 const Loader = () => {
   return (
     <div className="flex items-center justify-center h-screen">
@@ -6,5 +7,4 @@ const Loader = () => {
     </div>
   )
 }
-
-export default Loader
+export default Loader;
