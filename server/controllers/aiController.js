@@ -1,5 +1,5 @@
     // importing required modules
-    import ai from "../configs/ai";
+    import ai from "../configs/ai.js";
     import Resume from "../models/Resume.js";
 
 

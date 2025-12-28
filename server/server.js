@@ -25,6 +25,7 @@ app.get('/', (req, res) => res.send('Server is live...'))
 app.use('/api/users', userRouter);
 // create resume routes
 app.use('/api/resumes', resumeRouter);
+// create ai routes
 app.use('/api/ai', aiRouter);
 
 // app listening on 
