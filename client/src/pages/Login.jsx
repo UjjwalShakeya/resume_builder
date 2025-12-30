@@ -2,15 +2,20 @@ import React from "react";
 import { User2Icon } from "lucide-react";
 import { Mail } from "lucide-react";
 import { Lock } from "lucide-react";
-
+import { useDispatch } from "react-redux";
+import { login } from "../app/features/authSlice";
+import toast from "react-hot-toast";
+import api from "../configs/api";
 
 const Login = () => {
 
+  const dispatch = useDispatch();
+
   const query = new URLSearchParams(window.location.search);
-  
+
   const urlState = query.get('state');
 
-  const [state, setState] = React.useState(urlState ||"login");
+  const [state, setState] = React.useState(urlState || "login");
 
   const [formData, setFormData] = React.useState({
     name: "",
@@ -20,6 +25,14 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    try {
+      const { data } = await api.post(`/api/users/${state}`, formData)
+      dispatch(login(data));
+      localStorage.setItem('token', data.token);
+      toast.success(data.message);
+    } catch (error) {
+      toast(error?.response?.data?.message || error.message);
+    }
   };
 
   const handleChange = (e) => {
@@ -55,7 +68,7 @@ const Login = () => {
             />
           </div>
         )}
-        
+
         <div className="flex items-center w-full mt-4 bg-white border border-gray-300/80 h-12 rounded-full overflow-hidden pl-6 gap-2">
           <Mail size={13} color='#6B7280' />
           <input

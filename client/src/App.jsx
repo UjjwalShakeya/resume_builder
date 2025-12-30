@@ -8,6 +8,7 @@ import { useDispatch } from 'react-redux'
 import api from './configs/api'
 import { login, setLoading } from './app/features/authSlice'
 import { useEffect } from 'react'
+import { Toaster } from "react-hot-toast";
 
 const App = () => {
 
@@ -38,6 +39,7 @@ const App = () => {
 
   return (
     <>
+      <Toaster />
       <Routes>
         <Route path='/' element={<Home />} />
 

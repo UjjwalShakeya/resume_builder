@@ -12,7 +12,7 @@ const UserSchema = new mongoose.Schema({
 // user schema method to compare password with hashed password in database for every user
 UserSchema.methods.comparedPassword = function (password) {
     return bcrypt.compareSync(password, this.password);
-}
+};
 
 // creating user model
 const User = mongoose.model('User', UserSchema);
