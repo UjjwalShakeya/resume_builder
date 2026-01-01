@@ -1,9 +1,15 @@
-import { FilePenLineIcon, PencilIcon, PlusIcon, TrashIcon, UploadCloud, UploadCloudIcon, XIcon } from "lucide-react";
+import { FilePenLineIcon, LoaderCircleIcon, PencilIcon, PlusIcon, TrashIcon, UploadCloud, UploadCloudIcon, XIcon } from "lucide-react";
 import React, { use, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { dummyResumeData } from "../assets/assets.js";
+import { useSelector } from "react-redux";
+import api from "../configs/api.js";
+import toast from "react-hot-toast";
+import pdfToText from "react-pdftotext"
 
 const Dashboard = () => {
+  // getting user auth via useSelector
+  const { user, token } = useSelector(state => state.auth);
 
   // default accent colors for resumes
   const colors = ["#9333ea", "#d97706", "#dc2626", "#0284c7", "#16a34a"];
@@ -28,26 +34,62 @@ const Dashboard = () => {
   // state for editing resume
   const [editResumeId, setEditResumeId] = useState(null);
 
+  // control state for showing loading 
+  const [isLoading, setIsLoading] = useState(false);
+
   // using navigate hook to navigate to builder page
   const navigate = useNavigate();
 
 
   //fetch all resumes from dummy data
   const loadAllResumes = async () => {
-    setAllResumes(dummyResumeData)
+    try {
+      const { data } = await api.get('/api/users/resumes', { headers: { Authorization: token } });
+      setAllResumes(data.resumes);
+    } catch (error) {
+      toast(error?.response?.data?.message || error.message);
+
+    }
   }
 
   // handle create resume and upload resume
   const createResume = async (e) => {
-    e.preventDefault();
-    setShowCreateResume(false);
-    navigate(`/app/builder/res123`)
+    try {
+      e.preventDefault();
+      const { data } = await api.post('/api/resumes/create', { title }, {
+        headers: {
+          Authorization: token
+        }
+      });
+      setAllResumes([...allResumes, data.resume]);
+      setTitle('')
+      setShowCreateResume(false)
+      navigate(`/app/builder/${data.resume._id}`);
+    } catch (error) {
+      toast(error?.response?.data?.message || error.message);
+
+    }
   }
 
   const uploadResume = async (e) => {
     e.preventDefault();
-    setShowUploadResume(false);
-    navigate(`/app/builder/res123`)
+    setIsLoading(true);
+    try {
+      const resumeText = await pdfToText(resume);
+      const { data } = await api.post('/api/ai/upload-resume', { title, resumeText }, {
+        headers: {
+          Authorization: token
+        }
+      });
+      setTitle('');
+      setResume(null);
+      setShowUploadResume(false);
+      navigate(`/app/builder/${data.resumeId}`);
+
+    } catch (error) {
+      toast(error?.response?.data?.message || error.message);
+    }
+    setIsLoading(false);
   };
 
   // handler for editing resume title
@@ -203,8 +245,9 @@ const Dashboard = () => {
                 <input type="file" id="resume-input" accept=".pdf" hidden onChange={(e) => setResume(e.target.files[0])} />
               </div>
 
-              <button className='w-full py-2 bg-green-600 text-white rounded hover:bg-green-700 transition-colors'>
-                Upload Resume
+              <button disabled={isLoading} className="w-full py-2 bg-green-600 text-white rounded hover:bg-green-700 transition-colors flex items-center justify-center gap-2">
+                {isLoading && <LoaderCircleIcon />}
+                {isLoading ? 'Uploading...' : 'Upload Resume'}
               </button>
 
               {/* closing the upload resume popup */}

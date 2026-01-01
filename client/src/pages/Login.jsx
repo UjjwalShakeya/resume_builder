@@ -28,7 +28,7 @@ const Login = () => {
     try {
       const { data } = await api.post(`/api/users/${state}`, formData)
       dispatch(login(data));
-      localStorage.setItem('token', data.token);
+      localStorage.setItem('token', data.token); // setting the token in localstorage
       toast.success(data.message);
     } catch (error) {
       toast(error?.response?.data?.message || error.message);

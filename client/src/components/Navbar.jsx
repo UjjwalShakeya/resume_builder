@@ -3,12 +3,12 @@ import { Link, useNavigate } from "react-router-dom"
 
 // importing redux hooks 
 import { useDispatch, useSelector } from "react-redux";
-import {logout} from "../app/features/authSlice";
+import { logout } from "../app/features/authSlice";
 
 const Navbar = () => {
 
     // accessing the user via useSelector
-    const {user} = useSelector(state=> state.auth);
+    const { user } = useSelector(state => state.auth);
     const dispatch = useDispatch();
 
     const navigate = useNavigate();
@@ -17,6 +17,7 @@ const Navbar = () => {
     const logoutUser = () => {
         navigate("/");
         dispatch(logout());
+        localStorage.removeItem('token'); // removing the token on logout button click
     };
 
     return (
