@@ -94,6 +94,16 @@ const Dashboard = () => {
   // handler for editing resume title
   const editTitle = async (e) => {
     e.preventDefault();
+    try {
+      const { data } = await api.put('/api/resumes/update/', { resumeId: editResumeId, resumeData: { title } }, { headers: { Authorization: token } });
+      setAllResumes(allResumes.map(resume => resume._id === editResumeId ? { ...resume, title } : resume));
+      setTitle('');
+      setEditResumeId('');
+      toast.success(data.message);
+
+    } catch (error) {
+      toast(error?.response?.data?.message || error.message);
+    }
   }
 
   // handler for deleting resume
