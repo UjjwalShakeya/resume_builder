@@ -40,7 +40,6 @@ const Dashboard = () => {
   // using navigate hook to navigate to builder page
   const navigate = useNavigate();
 
-
   //fetch all resumes from dummy data
   const loadAllResumes = async () => {
     try {
@@ -99,11 +98,17 @@ const Dashboard = () => {
 
   // handler for deleting resume
   const deleteResume = async (resumeId) => {
-    const confirm = window.confirm('Are you sure you want to delete this resume?')
-    if (confirm) {
-      setAllResumes(prev => prev.filter(resume => resume._id != resumeId))
+    try {
+      const confirm = window.confirm('Are you sure you want to delete this resume?')
+      if (confirm) {
+        const { data } = await api.delete(`/api/resumes/delete/${resumeId}`, { headers: { Authorization: token } });
+        setAllResumes(allResumes.filter(resume => resume._id !== resumeId));
+        toast.success(data.message);
+      }
+    } catch (error) {
+      toast(error?.response?.data?.message || error.message);
     }
-  }
+  };
 
   // loading all resumes on component mount
   useEffect(() => {
