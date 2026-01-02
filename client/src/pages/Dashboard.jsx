@@ -1,7 +1,6 @@
 import { FilePenLineIcon, LoaderCircleIcon, PencilIcon, PlusIcon, TrashIcon, UploadCloud, UploadCloudIcon, XIcon } from "lucide-react";
 import React, { use, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { dummyResumeData } from "../assets/assets.js";
 import { useSelector } from "react-redux";
 import api from "../configs/api.js";
 import toast from "react-hot-toast";
@@ -261,7 +260,7 @@ const Dashboard = () => {
               </div>
 
               <button disabled={isLoading} className="w-full py-2 bg-green-600 text-white rounded hover:bg-green-700 transition-colors flex items-center justify-center gap-2">
-                {isLoading && <LoaderCircleIcon />}
+                {isLoading && <LoaderCircleIcon className="animate-spin size-4 text-white"/>}
                 {isLoading ? 'Uploading...' : 'Upload Resume'}
               </button>
 
