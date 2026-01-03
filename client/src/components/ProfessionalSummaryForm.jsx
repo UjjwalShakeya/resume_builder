@@ -13,7 +13,7 @@ const ProfessionalSummaryForm = ({ data, onChange, setResumeData }) => {
                     <p className='text-sm text-gray-500'>Add summary for your resume here</p>
                 </div>
 
-                <button className='flex items-center gap-2 px-3 py-1 text-sm bg-purple-100 text-purple-700 rounded hover:bg-purple-200 transition-colors disabled:opacity-50'>
+                <button  className='flex items-center gap-2 px-3 py-1 text-sm bg-purple-100 text-purple-700 rounded hover:bg-purple-200 transition-colors disabled:opacity-50'>
                     <Sparkles className='size-4' />
                     AI Enhance
                 </button>
