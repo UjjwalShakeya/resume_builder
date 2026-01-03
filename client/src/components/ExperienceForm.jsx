@@ -1,7 +1,19 @@
-import { Briefcase, Plus, Sparkles, Trash, Trash2 } from 'lucide-react'
-import React from 'react'
+import { Briefcase, Loader2, Plus, Sparkles, Trash, Trash2 } from 'lucide-react';
+
+import { useState } from "react";
+
+// redux state management
+import { useSelector } from 'react-redux';
+
+// api configeration
+import api from '../configs/api';
+import toast from "react-hot-toast";
 
 const ExperienceForm = ({ data, onChange }) => {
+    // accessing token
+    const { token } = useSelector(state => state.auth);
+    const [generatingIndex, setGeneratingIndex] = useState(-1);
+
 
     // add experience 
     const addExperience = () => {
@@ -25,10 +37,25 @@ const ExperienceForm = ({ data, onChange }) => {
     // update experience at index
     const updateExperience = (index, field, value) => {
         const updated = [...data];
-        updated[index] = { ...updated[index], [field]: value }
+        updated[index] = {...updated[index], [field]: value }
         onChange(updated);
     }
+    // update experience at index
+    const generateDescription = async (index) => {
+        setGeneratingIndex(index);
+        const experience = data[index];
+        const prompt = `enhance this job description ${experience.description} for the position of ${experience.position} at ${experience.company}`;
+        try {
+            const { data } = await api.post('/api/ai/enhance-job-desc', { userContent: prompt }, { headers: { Authorization: token } });
+            updateExperience(index, "description", data.enhanceContent);
+        } catch (error) {
+            toast.error(error.message);
 
+        } finally {
+            setGeneratingIndex(-1);
+        }
+
+    }
 
     return (
         <div className="space-y-6">
@@ -47,7 +74,6 @@ const ExperienceForm = ({ data, onChange }) => {
                     Add Experience
                 </button>
             </div>
-
 
             {data.length === 0 ? (
                 <div className="text-center py-8 text-gray-500">
@@ -86,8 +112,8 @@ const ExperienceForm = ({ data, onChange }) => {
                             <div className='space-y-2'>
                                 <div className='flex items-center justify-between '>
                                     <label className='text-sm font-medium text-gray-700'>Job Description</label>
-                                    <button className='flex items-center gap-1 px-2 py-1 text-xs bg-purple-100 text-purple-700 rounded hover:bg-purple-200 transition-colors disabled:opacity-50'>
-                                        <Sparkles className='w-3 h-3' />
+                                    <button onClick={() => generateDescription(index)} disabled={generatingIndex === index || !experience.position || !experience.company} className='flex items-center gap-1 px-2 py-1 text-xs bg-purple-100 text-purple-700 rounded hover:bg-purple-200 transition-colors disabled:opacity-50'>
+                                        {generatingIndex === index ? (<Loader2 className='h-3 animate-spin' />) : (<Sparkles className='w-3 h-3' />)}
                                         Enhance with AI
                                     </button>
                                 </div>

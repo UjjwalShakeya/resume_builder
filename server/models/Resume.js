@@ -20,7 +20,7 @@ const ResumeSchema = new mongoose.Schema({
         linkedin: { type: String, default: '' },
         website: { type: String, default: '' },
     },
-    experiences: [
+    experience: [
         {
             company: { type: String },
             position: { type: String },
