@@ -13,10 +13,11 @@ const userRouter = express.Router();
 
 // endpoint for user registration
 userRouter.post("/register", registerUser);
+
 // endpoint for user login
 userRouter.post("/login", loginUser);
-// endpoint to get user data, protected by authentication middleware
 
+// endpoint to get user data, protected by authentication middleware
 userRouter.get("/data", protect, getUserById);
 
 // endpoint to get user resumes, protected by authentication middleware
