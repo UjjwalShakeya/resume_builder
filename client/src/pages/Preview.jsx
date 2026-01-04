@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react'
-import { dummyResumeData } from '../assets/assets.js';
 import ResumePreview from '../components/ResumePreview.jsx';
 import Loader from '../components/Loader.jsx';
 import { useParams } from 'react-router-dom';
 import { ArrowLeftIcon } from 'lucide-react';
+import api from '../configs/api.js';
 
 const Preview = () => {
 
@@ -17,8 +17,14 @@ const Preview = () => {
 
   // setting resume data based on resumeId
   const loadResumeData = async () => {
-    setResumeData(dummyResumeData.find(resume => resume._id === resumeId || null));
-    setIsLoading(false);
+    try {
+      const { data } = await api.get(`/api/resumes/public/${resumeId}`);
+      setResumeData(data.resume);
+    } catch (error) {
+      console.log(error.message);
+    } finally {
+      setIsLoading(false);
+    }
   }
 
   // load resume data on component mount
